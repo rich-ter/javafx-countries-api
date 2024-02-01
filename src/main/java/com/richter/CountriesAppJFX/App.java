@@ -1,5 +1,6 @@
 package com.richter.CountriesAppJFX;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -59,18 +60,21 @@ public class App extends Application {
         String selectedCriteria = searchCriteriaComboBox.getValue();
         String searchTerm = searchTextField.getText();
 
-        if ("All Countries".equals(selectedCriteria)) {
-            fetchAllCountries();
-        } else if (!searchTerm.isEmpty()) {
+        tableView.getItems().clear(); // Clear table for new search
+
+        if (selectedCriteria != null) {
             switch (selectedCriteria) {
                 case "By Country Name":
                     fetchCountryData(searchTerm);
                     break;
                 case "By Language":
-                    // Add method to fetch data by language
+                	fetchCountriesByLanguage(searchTerm);
                     break;
                 case "By Currency":
-                    // Add method to fetch data by currency
+                	fetchCountriesByCurrency(searchTerm);
+                    break;
+                case "All Countries":
+                    fetchAllCountries(); // Handle fetching all countries
                     break;
                 default:
                     // Handle default case
@@ -119,22 +123,63 @@ public class App extends Application {
         tableView.getColumns().addAll(commonNameCol, officialNameCol, capitalCol, currencyColumn, populationCol, continentCol);
     }
 
+    
+    private void fetchCountriesByLanguage(String language) {
+        new Thread(() -> {
+            try {
+                CountryService service = new CountryService();
+                Country[] countries = service.getCountriesByLanguage(language);
+
+                Platform.runLater(() -> {
+                    tableView.getItems().clear();
+                    tableView.getItems().addAll(Arrays.asList(countries));
+                });
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                // Consider showing an error message to the user
+            }
+        }).start();
+    }    
+    
+    
+    private void fetchCountriesByCurrency(String currency) {
+        new Thread(() -> {
+            try {
+                CountryService service = new CountryService();
+                Country[] countries = service.getCountriesByCurrency(currency);
+
+                Platform.runLater(() -> {
+                    tableView.getItems().clear();
+                    tableView.getItems().addAll(Arrays.asList(countries));
+                });
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                // Consider showing an error message to the user
+            }
+        }).start();
+    }    
+    
     private void fetchAllCountries() {
         new Thread(() -> {
             try {
                 CountryService service = new CountryService();
-                Country[] countries = service.getAllCountries(); // Assuming this method exists and fetches all countries
+                Country[] allCountries = service.getAllCountries();
+                System.out.println("Fetched " + allCountries.length + " countries."); // Debugging line
 
                 Platform.runLater(() -> {
-                    tableView.getItems().addAll(FXCollections.observableArrayList(countries));
+                    tableView.getItems().clear(); // Clear existing items
+                    tableView.getItems().addAll(Arrays.asList(allCountries)); // Add all fetched countries
+                    tableView.refresh(); // Refresh the table view
                 });
             } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-                // Handle errors appropriately
+                e.printStackTrace(); // Log the error
+                Platform.runLater(() -> {
+                    // Optionally update the UI to inform the user that an error occurred
+                });
             }
         }).start();
     }
-    
+
     private void fetchCountryData(String countryName) {
         new Thread(() -> {
             try {
