@@ -1,0 +1,33 @@
+fetch all countries by name
+
+το api endpoint που μας ενδιαφέρει. 
+
+https://restcountries.com/v3.1/name/greece?fields=name,currencies,capital,population,continents
+
+
+
+1. Ανάκτηση λίστας όλων των χωρών.
+https://restcountries.com/v3.1/all?fields=name
+
+2. Ανάκτηση πληροφοριών για μια συγκεκριμένη χώρα με χρήση του ονόματός της.
+https://restcountries.com/v3.1/name/{name}
+https://restcountries.com/v3.1/name/eesti
+https://restcountries.com/v3.1/name/deutschland
+
+
+FULL NAME
+Search by country’s full name. It can be the common or official value
+https://restcountries.com/v3.1/name/{name}?fullText=true
+https://restcountries.com/v3.1/name/aruba?fullText=true
+3. Ανάκτηση λίστας χωρών που μιλούν μία συγκεκριμένη γλώσσα (π.χ. Ισπανικά).
+LANGUAGE
+Search by language code or name
+https://restcountries.com/v3.1/lang/{language}
+https://restcountries.com/v3.1/lang/cop
+https://restcountries.com/v3.1/lang/spanish
+4. Ανάκτηση λίστας χωρών που χρησιμοποιούν ένα συγκεκριμένο νόμισμα (π.χ. ευρώ).
+
+CURRENCY
+Search by currency code or name
+https://restcountries.com/v3.1/currency/{currency}
+https://restcountries.com/v3.1/currency/cop

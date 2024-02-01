@@ -1,0 +1,4 @@
+//command to use to run the javafx application
+
+mvn javafx:run 
+
