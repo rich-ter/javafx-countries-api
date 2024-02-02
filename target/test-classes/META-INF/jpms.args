@@ -1,0 +1,4 @@
+--patch-module
+com.richter.CountriesAppJFX=_
+--add-reads
+com.richter.CountriesAppJFX=ALL-UNNAMED

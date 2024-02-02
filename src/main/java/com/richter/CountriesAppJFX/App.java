@@ -34,7 +34,7 @@ public class App extends Application {
         fetchAllButton.setOnAction(event -> fetchAllCountries());
 
         searchCriteriaComboBox = new ComboBox<>();
-        searchCriteriaComboBox.getItems().addAll("Search all countries","By Country Name", "By Language", "By Currency");
+        searchCriteriaComboBox.getItems().addAll("By Country Name", "By Language", "By Currency");
         searchCriteriaComboBox.setPromptText("Select Search Criteria");
 
         
