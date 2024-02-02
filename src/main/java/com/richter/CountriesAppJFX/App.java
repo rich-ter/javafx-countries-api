@@ -21,16 +21,47 @@ public class App extends Application {
 
     private TableView<Country> tableView = new TableView<>();
     private ComboBox<String> searchCriteriaComboBox;
+    private ComboBox<String> searchHistoryComboBox;
     private TextField searchTextField;
     private Button searchButton;
+    private Button fetchAllButton; // Button for fetching all countries
     
     
     @Override
     public void start(Stage primaryStage) {
+    	
+        fetchAllButton = new Button("Search All Countries");
+        fetchAllButton.setOnAction(event -> fetchAllCountries());
+
         searchCriteriaComboBox = new ComboBox<>();
         searchCriteriaComboBox.getItems().addAll("Search all countries","By Country Name", "By Language", "By Currency");
         searchCriteriaComboBox.setPromptText("Select Search Criteria");
 
+        
+        
+        searchHistoryComboBox = new ComboBox<>();
+        searchHistoryComboBox.setPromptText("Previous Searches");
+        searchHistoryComboBox.setOnAction(event -> {
+            String selectedSearch = searchHistoryComboBox.getSelectionModel().getSelectedItem();
+            if (selectedSearch != null && !selectedSearch.isEmpty()) {
+                // Extract criteria and term from the selectedSearch
+                String[] parts = selectedSearch.split(": ", 2);
+                if (parts.length > 1) {
+                    String criteria = parts[0];
+                    String term = parts[1];
+                    searchCriteriaComboBox.setValue(criteria);
+                    searchTextField.setText(term);
+                    performSearch();
+                }
+            }
+        });        
+        
+        
+        
+        
+        
+        
+        
         searchTextField = new TextField();
         searchTextField.setPromptText("Enter search term");
 
@@ -47,7 +78,7 @@ public class App extends Application {
         
         setupTableView();
 
-        HBox searchBox = new HBox(searchCriteriaComboBox, searchTextField, searchButton, resetButton);
+        HBox searchBox = new HBox(searchHistoryComboBox, fetchAllButton, searchCriteriaComboBox, searchTextField, searchButton, resetButton);
         VBox vbox = new VBox(searchBox, tableView);
         Scene scene = new Scene(vbox, 800, 400);
         primaryStage.setScene(scene);
@@ -60,24 +91,23 @@ public class App extends Application {
         String selectedCriteria = searchCriteriaComboBox.getValue();
         String searchTerm = searchTextField.getText();
 
-        tableView.getItems().clear(); // Clear table for new search
-
-        if (selectedCriteria != null) {
+        
+        if ("Fetch All Countries".equals(selectedCriteria)) {
+            fetchAllCountries();
+        } else if (selectedCriteria != null && !selectedCriteria.trim().isEmpty()) {
+            updateSearchHistory(selectedCriteria, searchTerm);
+            tableView.getItems().clear(); // Clear table for new search
             switch (selectedCriteria) {
                 case "By Country Name":
                     fetchCountryData(searchTerm);
                     break;
                 case "By Language":
-                	fetchCountriesByLanguage(searchTerm);
+                    fetchCountriesByLanguage(searchTerm);
                     break;
                 case "By Currency":
-                	fetchCountriesByCurrency(searchTerm);
-                    break;
-                case "All Countries":
-                    fetchAllCountries(); // Handle fetching all countries
+                    fetchCountriesByCurrency(searchTerm);
                     break;
                 default:
-                    // Handle default case
                     break;
             }
         }
@@ -170,6 +200,8 @@ public class App extends Application {
                     tableView.getItems().clear(); // Clear existing items
                     tableView.getItems().addAll(Arrays.asList(allCountries)); // Add all fetched countries
                     tableView.refresh(); // Refresh the table view
+                    updateSearchHistory("Fetch All Countries", null); // null or empty string for no specific term
+
                 });
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace(); // Log the error
@@ -197,6 +229,19 @@ public class App extends Application {
         }).start();
     }
 
+    
+    private void updateSearchHistory(String criteria, String term) {
+        String searchEntry = (term == null || term.isEmpty()) ? criteria : criteria + ": " + term;
+        if (!searchHistoryComboBox.getItems().contains(searchEntry)) {
+            searchHistoryComboBox.getItems().add(0, searchEntry);
+
+            while (searchHistoryComboBox.getItems().size() > 5) {
+                searchHistoryComboBox.getItems().remove(5);
+            }
+        }
+    }
+    
+    
     public static void main(String[] args) {
         launch(args);
     }

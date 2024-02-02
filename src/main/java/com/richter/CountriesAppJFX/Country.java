@@ -43,17 +43,20 @@ public class Country {
 // ΟΠΟΤΕ ΜΕ ΑΥΤΟΝ ΤΟΝ ΤΡΟΠΟ ΤΑ ΕΝΩΝΟΥΜΕ ΓΙΑ ΝΑ ΤΑ 
     // ΠΑΡΟΥΣΙΑΣΟΥΜΕ
     public String getCurrenciesAsString() {
+        if (currencies == null) {
+            return "No currencies"; // Or any other default value you see fit
+        }
         return currencies.entrySet().stream()
                 .map(entry -> entry.getValue().getName() + " (" + entry.getValue().getSymbol() + ")")
                 .collect(Collectors.joining(", "));
-    }   
+    }
     
     public void setCurrencies(Map<String, Currency> currencies) {
         this.currencies = currencies;
     }
 
     public List<String> getCapital() {
-        return capital;
+        return capital != null ? capital : List.of("No capital"); // Default value for null or empty capital
     }
 
     public void setCapital(List<String> capital) {
@@ -69,7 +72,7 @@ public class Country {
     }
 
     public List<String> getContinents() {
-        return continents;
+        return continents != null ? continents : List.of("No continent"); // Default value for null or empty continents
     }
 
     public void setContinents(List<String> continents) {
@@ -95,7 +98,7 @@ public class Country {
         private Map<String, NativeName> nativeName;
 
         public String getCommon() {
-            return common;
+            return common != null ? common : "No common name"; // Default for null common name
         }
 
         public void setCommon(String common) {
@@ -103,7 +106,7 @@ public class Country {
         }
 
         public String getOfficial() {
-            return official;
+            return official != null ? official : "No official name"; // Default for null official name
         }
 
         public void setOfficial(String official) {
