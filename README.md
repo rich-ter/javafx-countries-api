@@ -45,3 +45,10 @@ search by name (search field)
 search by currency
 search by language 
 
+
+
+*testing*
+
+![tests](/screenshots/api-fetch-test.png)
+
+
