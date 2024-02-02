@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -74,8 +76,16 @@ public class App extends Application {
         setupTableView();
 
         HBox searchBox = new HBox(searchHistoryComboBox, fetchAllButton, searchCriteriaComboBox, searchTextField, searchButton, resetButton);
+        searchBox.setAlignment(Pos.CENTER); // Align items in the HBox to the center horizontally
+        searchBox.setSpacing(10); // Adjust spacing between items in the HBox as needed
+
         VBox vbox = new VBox(searchBox, tableView);
-        Scene scene = new Scene(vbox, 800, 400);
+        vbox.setSpacing(20); // Increase space between VBox children, e.g., between searchBox and tableView
+        vbox.setPadding(new Insets(20, 0, 20, 0)); // Add padding to the top and bottom
+       
+        Scene scene = new Scene(vbox, 1200, 900);
+        scene.getStylesheets().add(getClass().getResource("/styling.css").toExternalForm());
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Country Information");
         primaryStage.show();
@@ -114,46 +124,50 @@ public class App extends Application {
         TableColumn<Country, String> commonNameCol = new TableColumn<>("Common Name");
         commonNameCol.setCellValueFactory(cellData -> 
             new SimpleStringProperty(cellData.getValue().getName().getCommon()));
+        commonNameCol.setPrefWidth(200); // Set preferred width
 
         // Official Name Column
         TableColumn<Country, String> officialNameCol = new TableColumn<>("Official Name");
         officialNameCol.setCellValueFactory(cellData -> 
             new SimpleStringProperty(cellData.getValue().getName().getOfficial()));
+        officialNameCol.setPrefWidth(200); // Set preferred width
 
         // Capital Column
         TableColumn<Country, String> capitalCol = new TableColumn<>("Capital");
         capitalCol.setCellValueFactory(cellData -> 
             new SimpleStringProperty(cellData.getValue().getCapital().isEmpty() ? "" : cellData.getValue().getCapital().get(0)));
-
+        capitalCol.setPrefWidth(150);
+        
         TableColumn<Country, String> currencyColumn = new TableColumn<>("Currency");
         currencyColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCurrenciesAsString()));
-//
-//        // Currency Symbol Column
-//        TableColumn<Country, String> currencySymbolCol = new TableColumn<>("Currency Symbol");
-//        currencySymbolCol.setCellValueFactory(cellData -> {
-//            Currency currency = cellData.getValue().getCurrencies().values().iterator().next();
-//            return new SimpleStringProperty(currency.getSymbol());
-//        });
+        currencyColumn.setPrefWidth(150);
 
         // Population Column
         TableColumn<Country, Number> populationCol = new TableColumn<>("Population");
         populationCol.setCellValueFactory(new PropertyValueFactory<>("population"));
+        populationCol.setPrefWidth(100);
 
         // Continent Column
         TableColumn<Country, String> continentCol = new TableColumn<>("Continent");
         continentCol.setCellValueFactory(cellData -> 
             new SimpleStringProperty(cellData.getValue().getContinents().isEmpty() ? "" : cellData.getValue().getContinents().get(0)));
+        continentCol.setPrefWidth(100);
 
         TableColumn<Country, String> subregionCol = new TableColumn<>("Subregion");
         subregionCol.setCellValueFactory(cellData -> 
                 new SimpleStringProperty(cellData.getValue().getSubregion()));
+        subregionCol.setPrefWidth(120);
 
         TableColumn<Country, String> languagesCol = new TableColumn<>("Languages");
         languagesCol.setCellValueFactory(cellData -> 
                 new SimpleStringProperty(cellData.getValue().getLanguagesAsString()));
+        languagesCol.setPrefWidth(150);
 
         // Add columns to the table
         tableView.getColumns().addAll(commonNameCol, officialNameCol, capitalCol, currencyColumn, populationCol, continentCol, subregionCol, languagesCol);
+        
+        tableView.setPrefHeight(900); // Set the preferred height to 400 pixels
+
     }
 
     
