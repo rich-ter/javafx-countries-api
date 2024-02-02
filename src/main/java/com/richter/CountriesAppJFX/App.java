@@ -87,7 +87,7 @@ public class App extends Application {
         scene.getStylesheets().add(getClass().getResource("/styling.css").toExternalForm());
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Country Information");
+        primaryStage.setTitle("Απαλλακτική Εργασία Java ΠΜΣ Προηγμένα Πληροφοριακά Συστήματα");
         primaryStage.show();
     }
     
