@@ -34,7 +34,7 @@ filter / aggregate by type of column (i.e. name, capital, currency, population, 
 
 Πρώτο version του UI εφόσων οι παραπάνω λειτουργίες έχουν ενσωματωθεί.
 
-![Alt text](./screenshots/first-ui-version.PNG?raw=true "Title")
+![Alt text](./screenshots/first-ui-version.png?raw=true "Title")
 
 
 *testing*
