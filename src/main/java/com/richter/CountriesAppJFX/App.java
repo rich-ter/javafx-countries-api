@@ -118,7 +118,7 @@ public class App extends Application {
         }
     }
     
-
+    
     private void setupTableView() {
         // Common Name Column
         TableColumn<Country, String> commonNameCol = new TableColumn<>("Common Name");
@@ -205,6 +205,8 @@ public class App extends Application {
             }
         }).start();
     }    
+
+ 
     
     private void fetchAllCountries() {
         new Thread(() -> {
