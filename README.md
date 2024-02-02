@@ -35,3 +35,13 @@ Considerations:
 2. Μία κλάση CountryService η οποία διαχειρίζεται τα διαφορετικά api calls στα api endpoint του restcountries 
 3. Μία κλάση App.java η οποία ξεκινάει το GUI JavaFX
 
+
+-----
+
+features:
+
+store 5 results
+search by name (search field)
+search by currency
+search by language 
+

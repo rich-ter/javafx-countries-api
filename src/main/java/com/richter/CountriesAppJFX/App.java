@@ -149,8 +149,16 @@ public class App extends Application {
         continentCol.setCellValueFactory(cellData -> 
             new SimpleStringProperty(cellData.getValue().getContinents().isEmpty() ? "" : cellData.getValue().getContinents().get(0)));
 
+        TableColumn<Country, String> subregionCol = new TableColumn<>("Subregion");
+        subregionCol.setCellValueFactory(cellData -> 
+                new SimpleStringProperty(cellData.getValue().getSubregion()));
+
+        TableColumn<Country, String> languagesCol = new TableColumn<>("Languages");
+        languagesCol.setCellValueFactory(cellData -> 
+                new SimpleStringProperty(cellData.getValue().getLanguagesAsString()));
+
         // Add columns to the table
-        tableView.getColumns().addAll(commonNameCol, officialNameCol, capitalCol, currencyColumn, populationCol, continentCol);
+        tableView.getColumns().addAll(commonNameCol, officialNameCol, capitalCol, currencyColumn, populationCol, continentCol, subregionCol, languagesCol);
     }
 
     

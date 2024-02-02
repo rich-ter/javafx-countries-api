@@ -3,7 +3,7 @@ package com.richter.CountriesAppJFX;
 public class TestApi {
     public static void main(String[] args) {
         testGetCountryByName(); // Existing call to test fetching a single country
-        testGetAllCountries(); // New call to test fetching all countries
+//        testGetAllCountries(); // New call to test fetching all countries
     }
     
     public static void testGetCountryByName() {

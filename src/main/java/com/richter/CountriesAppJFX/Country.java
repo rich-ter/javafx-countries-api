@@ -18,7 +18,9 @@ public class Country {
     private List<String> capital;
     private int population;
     private List<String> continents;
-
+    private String subregion;
+    private Map<String, String> languages;
+    
     public Name getName() {
         return name;
     }
@@ -79,6 +81,31 @@ public class Country {
         this.continents = continents;
     }
 
+    public String getSubregion() {
+        return subregion != null ? subregion : "No subregion"; // Default value for null subregion
+    }
+    
+    public void setSubregion(String subregion) {
+        this.subregion = subregion;
+    }   
+
+    public Map<String, String> getLanguages() {
+        return languages != null ? languages : Map.of(); // Default value for null languages
+    }
+
+    public void setLanguages(Map<String, String> languages) {
+        this.languages = languages;
+    }
+
+    // Method to get languages as a String
+    public String getLanguagesAsString() {
+        if (languages == null || languages.isEmpty()) {
+            return "No languages"; // Or any other default value you see fit
+        }
+        return languages.values().stream().collect(Collectors.joining(", "));
+    }
+    
+    
     // ti einai auti i override?//
 
     @Override
@@ -89,8 +116,11 @@ public class Country {
                 ", capital=" + capital +
                 ", population=" + population +
                 ", continents=" + continents +
+                ", subregion='" + subregion + '\'' +
+                ", languages=" + getLanguagesAsString() +
                 '}';
     }
+
 
     public static class Name {
         private String common;
