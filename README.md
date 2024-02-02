@@ -37,6 +37,10 @@ filter / aggregate by type of column (i.e. name, capital, currency, population, 
 ![Alt text](./screenshots/first-ui-version.png?raw=true "Title")
 
 
+Δεύτερο version του UI.
+
+![Alt text](./screenshots/second-version-ui.PNG?raw=true "Title")
+
 *testing*
 
 ![Alt text](./screenshots/api-fetch-test.PNG?raw=true "Title")
