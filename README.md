@@ -49,6 +49,6 @@ search by language
 
 *testing*
 
-![tests](/screenshots/api-fetch-test.png)
+![tests](./screenshots/api-fetch-test.png)
 
 
