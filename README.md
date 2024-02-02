@@ -49,12 +49,4 @@ search by language
 
 *testing*
 
-![tests](./screenshots/api-fetch-test.png)
-![Alt text](./screenshots/api-fetch-test.png?raw=true "Title")
 ![Alt text](./screenshots/api-fetch-test.PNG?raw=true "Title")
-
-![Alt text](api-fetch-test.png?raw=true "Title")
-![Alt text](../screenshots/api-fetch-test.png?raw=true "Title")
-![Alt text](/screenshots/api-fetch-test.png?raw=true "Title")
-![Alt text](screenshots/api-fetch-test.png?raw=true "Title")
-![Alt text](javafx-countries-api/screenshots/api-fetch-test.png?raw=true "Title")
