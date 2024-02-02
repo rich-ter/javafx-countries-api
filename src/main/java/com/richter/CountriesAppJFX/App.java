@@ -57,11 +57,6 @@ public class App extends Application {
         });        
         
         
-        
-        
-        
-        
-        
         searchTextField = new TextField();
         searchTextField.setPromptText("Enter search term");
 

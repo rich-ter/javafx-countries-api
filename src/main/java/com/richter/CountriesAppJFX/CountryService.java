@@ -5,10 +5,16 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.richter.CountriesAppJFX.Country.Currency;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CountryService {
     private final HttpClient client;
@@ -47,4 +53,36 @@ public class CountryService {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return mapper.readValue(response.body(), Country[].class);
     }
+    
+    
+    
+    public List<String> fetchAllCountryNames() throws IOException, InterruptedException {
+        Country[] countries = new CountryService().getAllCountries(); // Fetch all countries
+        return Arrays.stream(countries)
+                     .map(country -> country.getName().getCommon()) // or getOfficial() based on your need
+                     .collect(Collectors.toList());
+    }
+    
+    
+    
+    public Set<String> fetchAllLanguages() throws IOException, InterruptedException {
+        Country[] countries = new CountryService().getAllCountries(); // Fetch all countries
+        return Arrays.stream(countries)
+                     .flatMap(country -> country.getLanguages().values().stream())
+                     .collect(Collectors.toSet()); // Use Set to avoid duplicates
+    }
+    
+    
+    public Set<String> fetchAllCurrencyNames() throws IOException, InterruptedException {
+        Country[] allCountries = getAllCountries(); // Assume this method fetches all countries
+        return Arrays.stream(allCountries)
+                     .map(Country::getCurrencies) // Get the currencies map
+                     .filter(Objects::nonNull) // Filter out null currencies maps
+                     .flatMap(map -> map.values().stream()) // Stream of Currency objects
+                     .map(Currency::getName) // Stream of currency names
+                     .collect(Collectors.toSet()); // Collect to a set to remove duplicates
+    }
+
+    
+    
 }
