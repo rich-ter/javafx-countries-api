@@ -3,6 +3,5 @@ module com.richter.CountriesAppJFX {
 	requires java.net.http;
 	requires com.fasterxml.jackson.databind;
 	requires javafx.base;
-	requires org.controlsfx.controls;
     exports com.richter.CountriesAppJFX;
 }
