@@ -52,10 +52,12 @@ public class CountryService {
     }
 
     public Country[] getCountriesByCurrency(String currency, boolean exactMatch) throws IOException, InterruptedException {
-        // Handle URL encoding and fullText=true based on the exactMatch parameter
-        String url = BASE_URL + "/currency/" + (exactMatch ? currency + "?fullText=true" : URLEncoder.encode(currency, StandardCharsets.UTF_8));
+        // Convert currency to lowercase to match the API's expected format
+        String url = BASE_URL + "/currency/" + currency.toLowerCase();
+        System.out.println("Requesting URL: " + url); // Log the request URL for debugging
         return sendRequest(url);
     }
+
 
     private Country[] sendRequest(String url) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()

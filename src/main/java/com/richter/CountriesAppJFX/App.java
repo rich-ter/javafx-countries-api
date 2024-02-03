@@ -1,31 +1,20 @@
 package com.richter.CountriesAppJFX;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,11 +28,10 @@ public class App extends Application {
     private ComboBox<String> countrySearchComboBox = new ComboBox<>();
     private Button searchButton = new Button("Search");
     private Button fetchAllButton; // Button for fetching all countries
-    private ComboBox<String> selectCountryByNameComboBox;
     private CountrySearchableComboBox countrySearchableComboBox;
     private LanguageSearchableComboBox languageSearchableComboBox;
     private CurrencySearchableComboBox currencySearchableComboBox;
-    
+  
     @Override
     public void start(Stage primaryStage) {
         fetchAllButton = new Button("Search All Countries");
@@ -101,7 +89,7 @@ public class App extends Application {
         primaryStage.show();
 
     }
-   
+ 
     private void setupCountrySearchComboBox() {
         // Initialize the ComboBox with all country names
         new Thread(() -> {
@@ -167,7 +155,7 @@ public class App extends Application {
         // Check if a currency is selected
         String selectedCurrency = currencySearchableComboBox.getValue();
         if (isValidSearchTerm(selectedCurrency)) {
-            fetchCountriesByCurrency(selectedCurrency, true);
+            fetchCountriesByCurrency(selectedCurrency, false);
             updateSearchHistory("By Currency", selectedCurrency);
             return; // Final check, no need to stop execution
         }
