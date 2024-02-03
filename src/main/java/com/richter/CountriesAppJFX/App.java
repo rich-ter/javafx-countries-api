@@ -158,10 +158,10 @@ public class App extends Application {
                     fetchCountryData(searchTerm, true); // Pass true for exact match
                     break;
                 case "By Language":
-                    fetchCountriesByLanguage(searchTerm);
+                    fetchCountriesByLanguage(searchTerm, true);
                     break;
                 case "By Currency":
-                    fetchCountriesByCurrency(searchTerm);
+                    fetchCountriesByCurrency(searchTerm, true);
                     break;
                 default:
                     break;
@@ -229,12 +229,61 @@ public class App extends Application {
 
 
 
-    private void fetchCountriesByLanguage(String language) {
+    private void fetchCountriesByLanguage(String language, boolean exactMatch) {
         new Thread(() -> {
             try {
-                CountryService service = new CountryService();
-                Country[] countries = service.getCountriesByLanguage(language);
+                // Create a final copy of language
+                final String finalLanguage = language.trim();
 
+                // Check if the finalLanguage is empty
+                if (finalLanguage.isEmpty()) {
+                    // Handle the case where the input is empty (e.g., only spaces)
+                    return;
+                }
+
+                // Encode the language to handle spaces
+                String adjustedLanguage = finalLanguage.replace(" ", "%20");
+
+                CountryService service = new CountryService();
+
+                // Get the list of countries by language directly from the service
+                List<Country> countries = service.getCountriesByLanguage(adjustedLanguage, exactMatch);
+
+                // Update the UI on the JavaFX application thread
+                Platform.runLater(() -> {
+                    tableView.getItems().clear();
+                    tableView.getItems().addAll(countries);
+                });
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                // Consider showing an error message to the user
+            }
+        }).start();
+    }
+
+    
+    
+    private void fetchCountriesByCurrency(String currency, boolean exactMatch) {
+        new Thread(() -> {
+            try {
+                // Create a final copy of currency
+                final String finalCurrency = currency.trim();
+
+                // Check if the finalCurrency is empty
+                if (finalCurrency.isEmpty()) {
+                    // Handle the case where the input is empty (e.g., only spaces)
+                    return;
+                }
+
+                // Encode the currency to handle spaces
+                String adjustedCurrency = finalCurrency.replace(" ", "%20");
+
+                CountryService service = new CountryService();
+
+                // Get the list of countries by currency directly from the service
+                Country[] countries = service.getCountriesByCurrency(adjustedCurrency, exactMatch);
+
+                // Update the UI on the JavaFX application thread
                 Platform.runLater(() -> {
                     tableView.getItems().clear();
                     tableView.getItems().addAll(Arrays.asList(countries));
@@ -244,25 +293,8 @@ public class App extends Application {
                 // Consider showing an error message to the user
             }
         }).start();
-    }    
-    
-    
-    private void fetchCountriesByCurrency(String currency) {
-        new Thread(() -> {
-            try {
-                CountryService service = new CountryService();
-                Country[] countries = service.getCountriesByCurrency(currency);
+    }
 
-                Platform.runLater(() -> {
-                    tableView.getItems().clear();
-                    tableView.getItems().addAll(Arrays.asList(countries));
-                });
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-                // Consider showing an error message to the user
-            }
-        }).start();
-    }    
 
  
     
@@ -320,13 +352,6 @@ public class App extends Application {
             }
         }).start();
     }
-
-
-
-
-
-
-
 
 
     private void updateSearchHistory(String criteria, String term) {

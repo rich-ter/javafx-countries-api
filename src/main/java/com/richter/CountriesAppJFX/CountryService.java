@@ -41,15 +41,20 @@ public class CountryService {
         return countryList;
     }
 
+    public List<Country> getCountriesByLanguage(String language, boolean exactMatch) throws IOException, InterruptedException {
+        String url = BASE_URL + "/lang/" + language + (exactMatch ? "?fullText=true" : "");
+        Country[] countries = sendRequest(url);
 
-    public Country[] getCountriesByLanguage(String language) throws IOException, InterruptedException {
-        return sendRequest(
-                BASE_URL + "/lang/" + URLEncoder.encode(language, StandardCharsets.UTF_8));
+        // Convert the array of countries to a List
+        List<Country> countryList = Arrays.asList(countries);
+
+        return countryList;
     }
 
-    public Country[] getCountriesByCurrency(String currency) throws IOException, InterruptedException {
-        return sendRequest(
-                BASE_URL + "/currency/" + URLEncoder.encode(currency, StandardCharsets.UTF_8));
+    public Country[] getCountriesByCurrency(String currency, boolean exactMatch) throws IOException, InterruptedException {
+        // Handle URL encoding and fullText=true based on the exactMatch parameter
+        String url = BASE_URL + "/currency/" + (exactMatch ? currency + "?fullText=true" : URLEncoder.encode(currency, StandardCharsets.UTF_8));
+        return sendRequest(url);
     }
 
     private Country[] sendRequest(String url) throws IOException, InterruptedException {
