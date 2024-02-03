@@ -58,6 +58,7 @@ still left to finish:
 - null pointer exceptions. 
 - na kanw optimise to api end point na travaei mono ta data pou me endiaferoun. 
 να προσθεσω auto complete αν ο χρηστης επιλεξει γλωσσες η currency
+-consider adding the url structure and constructor as in the java class she made in the lecture (check lecture notes)
 
 αυτο σημαινει οτι πρεπει καπως να γίνεται το fetch απο πριν οταν τρεχει η εφαρμογη για να έχει αυτά τα αποτελεσματα.
 
