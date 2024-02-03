@@ -5,5 +5,6 @@ module com.richter.CountriesAppJFX {
 	requires javafx.base;
 	requires javafx.graphics;
 	requires com.fasterxml.jackson.annotation;
+	requires org.controlsfx.controls;
     exports com.richter.CountriesAppJFX;
 }

@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,17 +39,27 @@ public class App extends Application {
     private ComboBox<String> countrySearchComboBox = new ComboBox<>();
     private Button searchButton = new Button("Search");
     private Button fetchAllButton; // Button for fetching all countries
+    private ComboBox<String> selectCountryByNameComboBox;
+    private CountrySearchableComboBox countrySearchableComboBox;
+    private LanguageSearchableComboBox languageSearchableComboBox;
+    private CurrencySearchableComboBox currencySearchableComboBox;
     
-   
     @Override
     public void start(Stage primaryStage) {
         fetchAllButton = new Button("Search All Countries");
         fetchAllButton.setOnAction(event -> fetchAllCountries());
 
         searchCriteriaComboBox = new ComboBox<>();
+
         searchCriteriaComboBox.getItems().addAll("By Country Name", "By Language", "By Currency");
         searchCriteriaComboBox.setPromptText("Select Search Criteria");
 
+
+        countrySearchableComboBox = new CountrySearchableComboBox();
+        languageSearchableComboBox = new LanguageSearchableComboBox();
+        currencySearchableComboBox = new CurrencySearchableComboBox();
+
+      
         setupCountrySearchComboBox();
 
         searchHistoryComboBox = new ComboBox<>();
@@ -62,15 +73,19 @@ public class App extends Application {
             searchCriteriaComboBox.getSelectionModel().clearSelection();
             countrySearchComboBox.getSelectionModel().clearSelection();
             countrySearchComboBox.getEditor().clear();
+            countrySearchableComboBox.getSelectionModel().clearSelection();
+            languageSearchableComboBox.getSelectionModel().clearSelection();
+            currencySearchableComboBox.getSelectionModel().clearSelection();
         });
 
+       
         setupTableView();
 
-        HBox searchInputBox = new HBox(countrySearchComboBox, searchButton);
+        HBox searchInputBox = new HBox( searchButton);
         searchInputBox.setAlignment(Pos.CENTER);
         searchInputBox.setSpacing(10);
 
-        HBox searchBox = new HBox(searchHistoryComboBox, fetchAllButton, searchCriteriaComboBox, searchInputBox, resetButton);
+        HBox searchBox = new HBox(searchHistoryComboBox, fetchAllButton, countrySearchableComboBox,languageSearchableComboBox,currencySearchableComboBox, searchInputBox, resetButton);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(10);
 
@@ -86,7 +101,7 @@ public class App extends Application {
         primaryStage.show();
 
     }
-    
+   
     private void setupCountrySearchComboBox() {
         // Initialize the ComboBox with all country names
         new Thread(() -> {
@@ -132,43 +147,34 @@ public class App extends Application {
     }
 
 
-
-
-
-
-
-   
     private void performSearch() {
-        String selectedCriteria = searchCriteriaComboBox.getValue();
-        String searchTerm = countrySearchComboBox.getEditor().getText().trim(); // Trim whitespace
-
-        if (searchTerm.isEmpty()) {
-            // Handle the case where the input is empty or consists only of whitespace
-            // You can display a message or simply return without sending the API request
-            return;
-        }
-
-        if ("Fetch All Countries".equals(selectedCriteria)) {
-            fetchAllCountries();
-        } else if (selectedCriteria != null && !selectedCriteria.trim().isEmpty()) {
-            updateSearchHistory(selectedCriteria, searchTerm);
-            tableView.getItems().clear(); // Clear table for new search
-            switch (selectedCriteria) {
-                case "By Country Name":
-                    fetchCountryData(searchTerm, true); // Pass true for exact match
-                    break;
-                case "By Language":
-                    fetchCountriesByLanguage(searchTerm, true);
-                    break;
-                case "By Currency":
-                    fetchCountriesByCurrency(searchTerm, true);
-                    break;
-                default:
-                    break;
-            }
+        // Check if a country is selected
+        String selectedCountry = countrySearchableComboBox.getValue();
+        if (isValidSearchTerm(selectedCountry)) {
+            fetchCountryData(selectedCountry, true);
+            updateSearchHistory("By Country Name", selectedCountry);
+            return; // Stop further execution to avoid overlapping searches
         }
         
-        // You don't need to filter the results here for exact match since it will be handled in the fetchCountryData method.
+        // Check if a language is selected
+        String selectedLanguage = languageSearchableComboBox.getValue();
+        if (isValidSearchTerm(selectedLanguage)) {
+            fetchCountriesByLanguage(selectedLanguage, true);
+            updateSearchHistory("By Language", selectedLanguage);
+            return; // Stop further execution to avoid overlapping searches
+        }
+        
+        // Check if a currency is selected
+        String selectedCurrency = currencySearchableComboBox.getValue();
+        if (isValidSearchTerm(selectedCurrency)) {
+            fetchCountriesByCurrency(selectedCurrency, true);
+            updateSearchHistory("By Currency", selectedCurrency);
+            return; // Final check, no need to stop execution
+        }
+    }
+
+    private boolean isValidSearchTerm(String searchTerm) {
+        return searchTerm != null && !searchTerm.trim().isEmpty();
     }
 
     
