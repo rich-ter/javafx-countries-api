@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Εφόσων μας ενδιαφέρουν συγκεκριμένα στοιχεία όπως ορίζει η άσκηση
  * capital, currency, population, continent etc. θα φτιάξουμε μια κλάση μονο με αυτά τα δεδομενα 
  */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
     private Name name;

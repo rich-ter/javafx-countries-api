@@ -52,8 +52,8 @@ filter / aggregate by type of column (i.e. name, capital, currency, population, 
 
 still left to finish:
 
-- try -catch exceptions on most properties that might crash
-- error messages to the user for certain actions #
+- try -catch exceptions on most properties that might crash (ADD THIS)
+- error messages to the user for certain actions # (ADD BTHIS)
 - unit tests - working on it 
 - null pointer exceptions. 
 - na kanw optimise to api end point na travaei mono ta data pou me endiaferoun. 

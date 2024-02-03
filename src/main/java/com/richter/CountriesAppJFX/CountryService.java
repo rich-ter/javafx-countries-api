@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.richter.CountriesAppJFX.Country.Currency;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +33,6 @@ public class CountryService {
         String url = BASE_URL + "/name/" + name + (exactMatch ? "?fullText=true" : "");
         Country[] countries = sendRequest(url);
 
-        // Convert the array of countries to a List
         List<Country> countryList = Arrays.asList(countries);
 
         return countryList;
@@ -45,14 +42,12 @@ public class CountryService {
         String url = BASE_URL + "/lang/" + language + (exactMatch ? "?fullText=true" : "");
         Country[] countries = sendRequest(url);
 
-        // Convert the array of countries to a List
         List<Country> countryList = Arrays.asList(countries);
 
         return countryList;
     }
 
     public Country[] getCountriesByCurrency(String currency, boolean exactMatch) throws IOException, InterruptedException {
-        // Convert currency to lowercase to match the API's expected format
         String url = BASE_URL + "/currency/" + currency.toLowerCase();
         System.out.println("Requesting URL: " + url); // Log the request URL for debugging
         return sendRequest(url);

@@ -26,7 +26,7 @@ public class LanguageSearchableComboBox extends SearchableComboBox<String> {
                     setItems(allLanguages);
                 });
             } catch (Exception e) {
-                e.printStackTrace(); // Handle exceptions appropriately
+                e.printStackTrace();
             }
         }).start();
     }

@@ -26,7 +26,7 @@ public class CountrySearchableComboBox extends SearchableComboBox<String> {
                     setItems(allCountries);
                 });
             } catch (Exception e) {
-                e.printStackTrace(); // Handle exceptions appropriately
+                e.printStackTrace(); 
             }
         }).start();
     }

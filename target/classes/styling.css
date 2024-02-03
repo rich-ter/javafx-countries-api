@@ -37,11 +37,6 @@
 }
 
 
-.combo-box .text-input .text-field {
-    -fx-prompt-text-fill: #999; /* Lighter text color for visibility */
-}
-
-/* If the above doesn't work, try targeting the .combo-box-base */
-.combo-box-base .text-field, .combo-box-base .text-input {
-    -fx-prompt-text-fill: #999; /* Adjust the color as needed */
-}
+countryLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+languageLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+currencyLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
