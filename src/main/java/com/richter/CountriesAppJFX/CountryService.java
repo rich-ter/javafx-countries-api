@@ -19,30 +19,37 @@ import java.util.stream.Collectors;
 public class CountryService {
     private final HttpClient client;
     private final ObjectMapper mapper;
+    private final String BASE_URL = "https://restcountries.com/v3.1";
 
     public CountryService() {
         this.client = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
     }
 
-    //kai na ftiaxw to url na einai analogo
-    // ISWS NA MIKRINO TO API ENDPOINT NA TRAVAEI MONO AUTA POY ME ENDIAFEROUN GIA NA EINAI PIO GRIGORO?
     public Country[] getAllCountries() throws IOException, InterruptedException {
-        return sendRequest("https://restcountries.com/v3.1/all");
+        return sendRequest(BASE_URL + "/all");
     }
 
-    public Country getCountryByName(String name) throws IOException, InterruptedException {
-        return sendRequest("https://restcountries.com/v3.1/name/" + URLEncoder.encode(name, StandardCharsets.UTF_8))[0];
+
+    public List<Country> getCountriesByName(String name, boolean exactMatch) throws IOException, InterruptedException {
+        String url = BASE_URL + "/name/" + name + (exactMatch ? "?fullText=true" : "");
+        Country[] countries = sendRequest(url);
+
+        // Convert the array of countries to a List
+        List<Country> countryList = Arrays.asList(countries);
+
+        return countryList;
     }
+
 
     public Country[] getCountriesByLanguage(String language) throws IOException, InterruptedException {
         return sendRequest(
-                "https://restcountries.com/v3.1/lang/" + URLEncoder.encode(language, StandardCharsets.UTF_8));
+                BASE_URL + "/lang/" + URLEncoder.encode(language, StandardCharsets.UTF_8));
     }
 
     public Country[] getCountriesByCurrency(String currency) throws IOException, InterruptedException {
         return sendRequest(
-                "https://restcountries.com/v3.1/currency/" + URLEncoder.encode(currency, StandardCharsets.UTF_8));
+                BASE_URL + "/currency/" + URLEncoder.encode(currency, StandardCharsets.UTF_8));
     }
 
     private Country[] sendRequest(String url) throws IOException, InterruptedException {
@@ -53,36 +60,28 @@ public class CountryService {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return mapper.readValue(response.body(), Country[].class);
     }
-    
-    
-    
+
     public List<String> fetchAllCountryNames() throws IOException, InterruptedException {
-        Country[] countries = new CountryService().getAllCountries(); // Fetch all countries
+        Country[] countries = getAllCountries();
         return Arrays.stream(countries)
-                     .map(country -> country.getName().getCommon()) // or getOfficial() based on your need
+                     .map(country -> country.getName().getCommon())
                      .collect(Collectors.toList());
     }
-    
-    
-    
+
     public Set<String> fetchAllLanguages() throws IOException, InterruptedException {
-        Country[] countries = new CountryService().getAllCountries(); // Fetch all countries
+        Country[] countries = getAllCountries();
         return Arrays.stream(countries)
                      .flatMap(country -> country.getLanguages().values().stream())
-                     .collect(Collectors.toSet()); // Use Set to avoid duplicates
-    }
-    
-    
-    public Set<String> fetchAllCurrencyNames() throws IOException, InterruptedException {
-        Country[] allCountries = getAllCountries(); // Assume this method fetches all countries
-        return Arrays.stream(allCountries)
-                     .map(Country::getCurrencies) // Get the currencies map
-                     .filter(Objects::nonNull) // Filter out null currencies maps
-                     .flatMap(map -> map.values().stream()) // Stream of Currency objects
-                     .map(Currency::getName) // Stream of currency names
-                     .collect(Collectors.toSet()); // Collect to a set to remove duplicates
+                     .collect(Collectors.toSet());
     }
 
-    
-    
+    public Set<String> fetchAllCurrencyNames() throws IOException, InterruptedException {
+        Country[] allCountries = getAllCountries();
+        return Arrays.stream(allCountries)
+                     .map(Country::getCurrencies)
+                     .filter(Objects::nonNull)
+                     .flatMap(map -> map.values().stream())
+                     .map(Currency::getName)
+                     .collect(Collectors.toSet());
+    }
 }

@@ -56,7 +56,7 @@ still left to finish:
 - error messages to the user for certain actions #
 - unit tests - working on it 
 - null pointer exceptions. 
-
+- na kanw optimise to api end point na travaei mono ta data pou me endiaferoun. 
 να προσθεσω auto complete αν ο χρηστης επιλεξει γλωσσες η currency
 
 αυτο σημαινει οτι πρεπει καπως να γίνεται το fetch απο πριν οταν τρεχει η εφαρμογη για να έχει αυτά τα αποτελεσματα.
@@ -67,3 +67,12 @@ Considerations:
 - αυτη τη στιγμη fetcharo το endpoint για ολα τα στοιχεια ισως καλυτερα αν fetcharo μονο το endpoint
 για τα στοιχεια τα οποια με ενδιαφερουν είναι πιο efficient. πως μπορω να δειξω την διαφορα στους 2 τροποους στο runtime
 
+- To search history function einai available mono gia oso trexei i efarmogi, an klisei tote xanete to search result
+- gia na itan persistent auto tha eprepe na ftiaksoume mia vasi dedomenon pou einai out of scope autis tis askisis
+
+ΠΑΡΑΤΗΡΗΣΕΙΣ
+
+https://restcountries.com/v3.1/name/{name}
+
+ομως για χωρες με κενο το κενο αναμεσα στην χωρα πρεπει να γραφτει
+ως %20. και στο τελος να μπει το ?fullText=true

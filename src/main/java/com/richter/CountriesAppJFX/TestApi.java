@@ -5,18 +5,18 @@ import java.util.Set;
 
 public class TestApi {
     public static void main(String[] args) {
-//        testGetCountryByName(); // Existing call to test fetching a single country
+        testGetCountryByName(); // Existing call to test fetching a single country
 //        testGetAllCountries(); // Call to test fetching all countries
-//        testFetchAllCountryNames(); // New call to test fetching all country names
+        testFetchAllCountryNames(); // New call to test fetching all country names
 //        testFetchAllLanguages(); // New call to test fetching all languages
-        testFetchAllCurrencyNames(); // New call to test fetching all currency names
+//        testFetchAllCurrencyNames(); // New call to test fetching all currency names
     }
     
     // Existing method to test fetching a country by name
     public static void testGetCountryByName() {
         try {
             CountryService service = new CountryService();
-            Country greece = service.getCountryByName("Greece");
+            Country greece = service.getCountryByName("United States");
             System.out.println(greece);
         } catch (Exception e) {
             e.printStackTrace();
