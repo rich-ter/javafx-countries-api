@@ -11,6 +11,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>ApiFetcher</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>13</version>

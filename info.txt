@@ -1,0 +1,20 @@
+ApiFetcher
+
+mvn install
+
+creates the jar files
+
+which is already referenced in the pom of the countriesappjfx
+
+and then we 
+
+mvn install CountriesAppJFX
+
+and then we run the application
+
+----
+
+to run the app
+
+mvn clean javafx:run 
+

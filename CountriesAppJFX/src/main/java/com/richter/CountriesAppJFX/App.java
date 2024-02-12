@@ -3,6 +3,8 @@ package com.richter.CountriesAppJFX;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
+import ApiFetcher.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;

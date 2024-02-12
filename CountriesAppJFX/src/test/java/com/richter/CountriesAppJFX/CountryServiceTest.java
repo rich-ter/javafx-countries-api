@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import ApiFetcher.Country;
+import ApiFetcher.CountryService;
+
 class CountryServiceTest {
 
     private final CountryService service = new CountryService();
@@ -18,7 +21,7 @@ class CountryServiceTest {
     @Test
     void testGetCountryByName() throws Exception {
         // Use a well-known country to ensure the API response consistency
-        Country country = service.getCountryByName("Greece");
+        Country country = service.getCountriesByName("Greece", true);
         assertNotNull(country, "Country should not be null");
         assertEquals("Greece", country.getName().getCommon(), "Country name should match the query");
     }
