@@ -115,37 +115,33 @@ public class App extends Application {
         }
     }
     
+    // κοιτάει αν είναι άδεια τα πεδία 
     private void performSearch() {
-
+        // Check which search criteria is selected and call the corresponding method
         if (!countrySearchableComboBox.getSelectionModel().isEmpty()) {
-            performCountrySearch();
+            try {
+                performCountrySearch();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred during country search: " + e.getMessage());
+            }
         } else if (!languageSearchableComboBox.getSelectionModel().isEmpty()) {
-            performLanguageSearch();
+            try {
+                performLanguageSearch();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred during language search: " + e.getMessage());
+            }
         } else if (!currencySearchableComboBox.getSelectionModel().isEmpty()) {
-            performCurrencySearch();
-        }
-        
-    	String selectedCountry = countrySearchableComboBox.getValue();
-        if (isValidSearchTerm(selectedCountry)) {
-            fetchCountryData(selectedCountry, true);
-            updateSearchHistory("By Country Name", selectedCountry);
-            return; 
-        }
-        
-        String selectedLanguage = languageSearchableComboBox.getValue();
-        if (isValidSearchTerm(selectedLanguage)) {
-            fetchCountriesByLanguage(selectedLanguage, true);
-            updateSearchHistory("By Language", selectedLanguage);
-            return; 
-        }
-        
-        String selectedCurrency = currencySearchableComboBox.getValue();
-        if (isValidSearchTerm(selectedCurrency)) {
-            fetchCountriesByCurrency(selectedCurrency, false);
-            updateSearchHistory("By Currency", selectedCurrency);
-            return; 
+            try {
+                performCurrencySearch();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred during currency search: " + e.getMessage());
+            }
         }
     }
+
 
     private void performCountrySearch() {
         if (!languageSearchableComboBox.getSelectionModel().isEmpty() || !currencySearchableComboBox.getSelectionModel().isEmpty()) {
@@ -183,7 +179,9 @@ public class App extends Application {
         }
     }
     
-    private void showAlert(String message) {
+    // Την ορίζουμε ως public για να την χρησιμοποιήσουμε 
+    // για try catch σε αλλες κλασεις.
+    public void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Search Warning");
         alert.setHeaderText(null);
@@ -268,6 +266,7 @@ public class App extends Application {
                 });
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
+                Platform.runLater(() -> showAlert("Error fetching countries by language: " + e.getMessage()));
             }
         }).start();
     }
@@ -290,7 +289,7 @@ public class App extends Application {
                 });
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
-               
+                Platform.runLater(() -> showAlert("Error fetching countries by currency: " + e.getMessage()));
             }
         }).start();
     }
@@ -311,8 +310,7 @@ public class App extends Application {
                 });
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace(); 
-                Platform.runLater(() -> {
-                });
+                Platform.runLater(() -> showAlert("Error fetching all countries: " + e.getMessage()));
             }
         }).start();
     }
@@ -338,7 +336,7 @@ public class App extends Application {
                 });
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
-                // Handle errors appropriately
+                Platform.runLater(() -> showAlert("Error fetching country data: " + e.getMessage()));
             }
         }).start();
     }

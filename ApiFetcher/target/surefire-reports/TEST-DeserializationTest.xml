@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="CountryServiceTest" time="7.522" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="DeserializationTest" time="0" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -57,11 +57,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="fetchAllCountryNamesTest" classname="CountryServiceTest" time="2.071"/>
-  <testcase name="getCountriesByCurrencyTest" classname="CountryServiceTest" time="0.735"/>
-  <testcase name="getCountriesByLanguageTest" classname="CountryServiceTest" time="0.79"/>
-  <testcase name="getAllCountriesTest" classname="CountryServiceTest" time="1.138"/>
-  <testcase name="fetchAllLanguagesTest" classname="CountryServiceTest" time="1.201"/>
-  <testcase name="fetchAllCurrencyNamesTest" classname="CountryServiceTest" time="1.179"/>
-  <testcase name="getCountriesByNameTest" classname="CountryServiceTest" time="0.382"/>
+  <testcase name="testCountryDeserialization" classname="DeserializationTest" time="0"/>
 </testsuite>
