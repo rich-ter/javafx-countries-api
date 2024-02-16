@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 
 public class App extends Application {
@@ -183,9 +182,14 @@ public class App extends Application {
         languagesCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getLanguagesAsString()));
         languagesCol.setPrefWidth(150);
-
-        tableView.getColumns().addAll(commonNameCol, officialNameCol, capitalCol, currencyCol, populationCol, continentCol, subregionCol, languagesCol);
-
+        
+        tableView.getColumns().add(officialNameCol);
+        tableView.getColumns().add(capitalCol);
+        tableView.getColumns().add(currencyCol);
+        tableView.getColumns().add(populationCol);
+        tableView.getColumns().add(continentCol);
+        tableView.getColumns().add(subregionCol);
+        tableView.getColumns().add(languagesCol);
         tableView.setPrefHeight(900); 
     }
 

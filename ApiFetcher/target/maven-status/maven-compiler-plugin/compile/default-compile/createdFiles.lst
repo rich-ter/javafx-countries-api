@@ -1,6 +1,6 @@
 ApiFetcher\CountryService.class
-ApiFetcher\Country$Currency.class
-ApiFetcher\TestApi.class
 ApiFetcher\Country.class
 ApiFetcher\Country$NativeName.class
 ApiFetcher\Country$Name.class
+ApiFetcher\Country$Currency.class
+ApiFetcher\TestApi.class
