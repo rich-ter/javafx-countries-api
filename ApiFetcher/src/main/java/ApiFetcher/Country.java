@@ -3,17 +3,17 @@ package ApiFetcher;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-//import jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/* Η pojo κλάση μας που επιτρέπει την συλλογή χωρών απο το API
- * Εφόσων μας ενδιαφέρουν συγκεκριμένα στοιχεία όπως ορίζει η άσκηση
- * capital, currency, population, continent etc. θα φτιάξουμε μια κλάση μονο με αυτά τα δεδομενα
- */
 
+// Λέει στην βιλβιοθήκη jackson να αγνοησει πεδία που δεν σχετιζονται με τα πεδια στην κλαση Country 
+// βοηθαει στην αποσειροποιηση οταν υπαρχουν εξτρα πεδια.
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
+	/* Η pojo κλάση μας που επιτρέπει την συλλογή χωρών απο το API
+	 * Εφόσων μας ενδιαφέρουν συγκεκριμένα στοιχεία όπως ορίζει η άσκηση
+	 * capital, currency, population, continent etc. θα φτιάξουμε μια κλάση μονο με αυτά τα δεδομενα
+	 */
     private Name name;
     private Map<String, Currency> currencies;
     private List<String> capital;
@@ -25,8 +25,7 @@ public class Country {
     public Name getName() {
         return name;
     }
-//
-    // giati einai void edw?//
+
     public void setName(Name name) {
         this.name = name;
     }
@@ -36,15 +35,16 @@ public class Country {
      * η δομή του api endpoint γυρναει αποτελεσματα σαν list όποτε
      */
 
-    // giati einai map edw kai oxi string?//
+    // καλυτερο απο list 
+    // καθως δεν επιτρεπει διπλες εισαγωγες νομισματος 
     public Map<String, Currency> getCurrencies() {
         return currencies;
     }
 
-// ΑΥΤΟ ΕΔΩ ΤΟ ΒΑΖΟΥΜΕ ΓΙΑΤΙ ΑΝ ΜΙΑ ΧΩΡΑ ΕΧΕΙ
-// ΠΑΝΩ ΑΠΟ ΕΝΑ ΝΟΜΙΣΜΑ ΤΟΤΕ ΘΑ ΚΡΑΣΑΡΕΙ ΤΟ UI
-// ΟΠΟΤΕ ΜΕ ΑΥΤΟΝ ΤΟΝ ΤΡΟΠΟ ΤΑ ΕΝΩΝΟΥΜΕ ΓΙΑ ΝΑ ΤΑ
-    // ΠΑΡΟΥΣΙΑΣΟΥΜΕ
+    // ΑΥΤΟ ΕΔΩ ΤΟ ΒΑΖΟΥΜΕ ΓΙΑΤΙ ΑΝ ΜΙΑ ΧΩΡΑ ΕΧΕΙ
+    // ΠΑΝΩ ΑΠΟ ΕΝΑ ΝΟΜΙΣΜΑ ΤΟΤΕ ΘΑ ΚΡΑΣΑΡΕΙ ΤΟ UI
+    // ΟΠΟΤΕ ΜΕ ΑΥΤΟΝ ΤΟΝ ΤΡΟΠΟ ΤΑ ΕΝΩΝΟΥΜΕ ΓΙΑ ΝΑ ΤΑ
+    // ΠΑΡΟΥΣΙΑΣΟΥΜΕ ΣΤΟ JAVAFX MAVEN PROJECT
     public String getCurrenciesAsString() {
         if (currencies == null) {
             return "No currencies"; // Or any other default value you see fit
@@ -59,7 +59,7 @@ public class Country {
     }
 
     public List<String> getCapital() {
-        return capital != null ? capital : List.of("No capital"); // Default value for null or empty capital
+        return capital != null ? capital : List.of("No capital"); 
     }
 
     public void setCapital(List<String> capital) {
@@ -75,7 +75,7 @@ public class Country {
     }
 
     public List<String> getContinents() {
-        return continents != null ? continents : List.of("No continent"); // Default value for null or empty continents
+        return continents != null ? continents : List.of("No continent"); 
     }
 
     public void setContinents(List<String> continents) {
@@ -83,7 +83,7 @@ public class Country {
     }
 
     public String getSubregion() {
-        return subregion != null ? subregion : "No subregion"; // Default value for null subregion
+        return subregion != null ? subregion : "No subregion"; 
     }
 
     public void setSubregion(String subregion) {
@@ -91,29 +91,32 @@ public class Country {
     }
 
     public Map<String, String> getLanguages() {
-        return languages != null ? languages : Map.of(); // Default value for null languages
+        return languages != null ? languages : Map.of(); 
     }
 
     public void setLanguages(Map<String, String> languages) {
         this.languages = languages;
     }
 
-    // Method to get languages as a String
+    // ΞΑΝΑ, ΑΥΤΟ ΕΔΩ ΤΟ ΒΑΖΟΥΜΕ ΓΙΑΤΙ ΜΕΡΙΚΕΣ ΧΩΡΕΣ ΕΧΟΥΝ 
+    // ΔΥΟ ΓΛΩΣΣΕΣ ΟΠΟΤΕ ΓΙΑ ΝΑ ΜΗΝ ΚΡΑΣΑΡΕΙ ΤΟ APP
+    // ΤΙΣ ΕΝΩΝΟΥΜΕ
     public String getLanguagesAsString() {
         if (languages == null || languages.isEmpty()) {
-            return "No languages"; // Or any other default value you see fit
+            return "No languages"; 
         }
         return languages.values().stream().collect(Collectors.joining(", "));
     }
 
 
-    // ti einai auti i override?//
-
+    // συμπεριλαμβάνουμε την override 
+    // για να ενημερώσουμε πως χρησιμοποιεί μια 
+    // custom υλοποιήση της toString method
     @Override
     public String toString() {
         return "Country{" +
                 "name=" + name +
-                ", currencies=" + currencies +
+                ", currencies=" + getCurrenciesAsString() +
                 ", capital=" + capital +
                 ", population=" + population +
                 ", continents=" + continents +
@@ -129,7 +132,7 @@ public class Country {
         private Map<String, NativeName> nativeName;
 
         public String getCommon() {
-            return common != null ? common : "No common name"; // Default for null common name
+            return common != null ? common : "No common name"; 
         }
 
         public void setCommon(String common) {
@@ -137,7 +140,7 @@ public class Country {
         }
 
         public String getOfficial() {
-            return official != null ? official : "No official name"; // Default for null official name
+            return official != null ? official : "No official name"; 
         }
 
         public void setOfficial(String official) {

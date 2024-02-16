@@ -35,16 +35,24 @@ public class App extends Application {
         fetchAllButton = new Button("Search All Countries");
         fetchAllButton.setOnAction(event -> fetchAllCountries());
 
-        // java κλασείς για τα 3 κουμπια με βαση το search
+        // αρχικοποίηση των Combo Box απο την βιβλιοθήκη controls.fx 
         countrySearchableComboBox = new CountrySearchableComboBox();
         languageSearchableComboBox = new LanguageSearchableComboBox();
         currencySearchableComboBox = new CurrencySearchableComboBox();
 
+        // αρχικοποίηση του κουμπίου για το ιστορικό αναζητήσεων
         searchHistoryComboBox = new ComboBox<>();
         searchHistoryComboBox.setPromptText("Previous Searches");
-
+        
+        searchHistoryComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                executeSearchFromHistory(newSelection);
+            }
+        });
+        
         searchButton.setOnAction(event -> performSearch());
 
+        // εκκαθάριση επιλογών
         Button resetButton = new Button("Reset");
         resetButton.setOnAction(event -> {
             tableView.getItems().clear();
@@ -77,8 +85,21 @@ public class App extends Application {
 
     }
  
-
-
+    private void executeSearchFromHistory(String historyEntry) {
+        if (historyEntry.startsWith("By Country Name:")) {
+            String searchTerm = historyEntry.replace("By Country Name:", "").trim();
+            fetchCountryData(searchTerm, true);
+        } else if (historyEntry.startsWith("By Language:")) {
+            String searchTerm = historyEntry.replace("By Language:", "").trim();
+            fetchCountriesByLanguage(searchTerm, true);
+        } else if (historyEntry.startsWith("By Currency:")) {
+            String searchTerm = historyEntry.replace("By Currency:", "").trim();
+            fetchCountriesByCurrency(searchTerm, false);
+        } else if (historyEntry.equals("Fetch All Countries")) {
+            fetchAllCountries();
+        }
+    }
+    
     private void performSearch() {
 
     	String selectedCountry = countrySearchableComboBox.getValue();
@@ -107,8 +128,6 @@ public class App extends Application {
         return searchTerm != null && !searchTerm.trim().isEmpty();
     }
 
-    
-    
     private void setupTableView() {
 
     	TableColumn<Country, String> commonNameCol = new TableColumn<>("Common Name");
@@ -155,8 +174,6 @@ public class App extends Application {
         tableView.setPrefHeight(900); 
     }
 
-
-
     private void fetchCountriesByLanguage(String language, boolean exactMatch) {
         new Thread(() -> {
             try {
@@ -182,8 +199,6 @@ public class App extends Application {
         }).start();
     }
 
-    
-    
     private void fetchCountriesByCurrency(String currency, boolean exactMatch) {
         new Thread(() -> {
             try {
@@ -208,8 +223,6 @@ public class App extends Application {
     }
 
 
- 
-    
     private void fetchAllCountries() {
         new Thread(() -> {
             try {

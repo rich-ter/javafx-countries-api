@@ -1,0 +1,42 @@
+.root {
+    -fx-background-color: #333;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.table-view {
+    -fx-base: #222;
+    -fx-control-inner-background: #222;
+    -fx-background-color: #222;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #444;
+}
+
+.table-row-cell {
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+    -fx-border-color: #444;
+    -fx-table-cell-border-color: #444;
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #555555;
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: #666;
+    -fx-text-fill: white;
+    -fx-border-color: #555;
+}
+
+
+countryLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+languageLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+currencyLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
