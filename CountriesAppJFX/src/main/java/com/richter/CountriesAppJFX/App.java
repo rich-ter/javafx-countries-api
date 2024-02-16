@@ -19,6 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
 
 public class App extends Application {
 
@@ -34,10 +37,16 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         fetchAllButton = new Button("Search All Countries");
         fetchAllButton.setOnAction(event -> fetchAllCountries());
-
+        
+    
+        Label countrySearchLabel = new Label("Search by Country Name:");
         // αρχικοποίηση των Combo Box απο την βιβλιοθήκη controls.fx 
         countrySearchableComboBox = new CountrySearchableComboBox();
+        
+        Label languageSearchLabel = new Label("Search by a Language:");
         languageSearchableComboBox = new LanguageSearchableComboBox();
+       
+        Label currencySearchLabel = new Label("Search by a Currency:");
         currencySearchableComboBox = new CurrencySearchableComboBox();
 
         // αρχικοποίηση του κουμπίου για το ιστορικό αναζητήσεων
@@ -62,13 +71,17 @@ public class App extends Application {
         });
 
        
+        VBox countrySearchBox = new VBox(countrySearchLabel, countrySearchableComboBox);
+        VBox languageSearchBox = new VBox(languageSearchLabel, languageSearchableComboBox);
+        VBox currencySearchBox = new VBox(currencySearchLabel, currencySearchableComboBox);
+        
         setupTableView();
 
         HBox searchInputBox = new HBox( searchButton);
         searchInputBox.setAlignment(Pos.CENTER);
         searchInputBox.setSpacing(10);
 
-        HBox searchBox = new HBox(searchHistoryComboBox, fetchAllButton, countrySearchableComboBox,languageSearchableComboBox,currencySearchableComboBox, searchInputBox, resetButton);
+        HBox searchBox = new HBox(searchHistoryComboBox, fetchAllButton, countrySearchBox,languageSearchBox,currencySearchBox, searchInputBox, resetButton);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(10);
 
@@ -81,6 +94,8 @@ public class App extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Απαλλακτική Εργασία Java ΠΜΣ Προηγμένα Πληροφοριακά Συστήματα");
+        Image icon = new Image("UNIPI.jpg");
+        primaryStage.getIcons().add(icon);
         primaryStage.show();
 
     }
