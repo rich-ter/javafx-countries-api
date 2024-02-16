@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.control.Alert;
 
 public class App extends Application {
 
@@ -116,6 +117,14 @@ public class App extends Application {
     
     private void performSearch() {
 
+        if (!countrySearchableComboBox.getSelectionModel().isEmpty()) {
+            performCountrySearch();
+        } else if (!languageSearchableComboBox.getSelectionModel().isEmpty()) {
+            performLanguageSearch();
+        } else if (!currencySearchableComboBox.getSelectionModel().isEmpty()) {
+            performCurrencySearch();
+        }
+        
     	String selectedCountry = countrySearchableComboBox.getValue();
         if (isValidSearchTerm(selectedCountry)) {
             fetchCountryData(selectedCountry, true);
@@ -136,6 +145,50 @@ public class App extends Application {
             updateSearchHistory("By Currency", selectedCurrency);
             return; 
         }
+    }
+
+    private void performCountrySearch() {
+        if (!languageSearchableComboBox.getSelectionModel().isEmpty() || !currencySearchableComboBox.getSelectionModel().isEmpty()) {
+            showAlert("Please clear your previous search before searching by country name.");
+        } else {
+            String selectedCountry = countrySearchableComboBox.getValue();
+            if (isValidSearchTerm(selectedCountry)) {
+                fetchCountryData(selectedCountry, true);
+                updateSearchHistory("By Country Name", selectedCountry);
+            }
+        }
+    }
+
+    private void performLanguageSearch() {
+        if (!countrySearchableComboBox.getSelectionModel().isEmpty() || !currencySearchableComboBox.getSelectionModel().isEmpty()) {
+            showAlert("Please clear your previous search before searching by language.");
+        } else {
+            String selectedLanguage = languageSearchableComboBox.getValue();
+            if (isValidSearchTerm(selectedLanguage)) {
+                fetchCountriesByLanguage(selectedLanguage, true);
+                updateSearchHistory("By Language", selectedLanguage);
+            }
+        }
+    }
+
+    private void performCurrencySearch() {
+        if (!countrySearchableComboBox.getSelectionModel().isEmpty() || !languageSearchableComboBox.getSelectionModel().isEmpty()) {
+            showAlert("Please clear your previous search before searching by currency.");
+        } else {
+            String selectedCurrency = currencySearchableComboBox.getValue();
+            if (isValidSearchTerm(selectedCurrency)) {
+                fetchCountriesByCurrency(selectedCurrency, false);
+                updateSearchHistory("By Currency", selectedCurrency);
+            }
+        }
+    }
+    
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Search Warning");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private boolean isValidSearchTerm(String searchTerm) {
@@ -183,6 +236,7 @@ public class App extends Application {
                 new SimpleStringProperty(cellData.getValue().getLanguagesAsString()));
         languagesCol.setPrefWidth(150);
         
+        tableView.getColumns().add(commonNameCol);
         tableView.getColumns().add(officialNameCol);
         tableView.getColumns().add(capitalCol);
         tableView.getColumns().add(currencyCol);
