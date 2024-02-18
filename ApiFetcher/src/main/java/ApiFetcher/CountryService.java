@@ -43,7 +43,6 @@ public class CountryService {
         return sendRequest(BASE_URL + "/all");
     }
 
-
     public List<Country> getCountriesByName(String name, boolean exactMatch) throws IOException, InterruptedException {
         String url = BASE_URL + "/name/" + name + (exactMatch ? "?fullText=true" : "");
         Country[] countries = sendRequest(url);

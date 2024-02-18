@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="CountryServiceTest" time="7.522" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="CountryServiceTest" time="7.446" tests="7" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-17.0.9.9-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\User\AppData\Local\Temp\surefire1623448153472174073\surefirebooter5996987820503810257.jar C:\Users\User\AppData\Local\Temp\surefire1623448153472174073 2024-02-16T17-05-09_981-jvmRun1 surefire13498211225494021408tmp surefire_015109243752569725761tmp"/>
+    <property name="sun.java.command" value="C:\Users\User\AppData\Local\Temp\surefire15389853507731351113\surefirebooter15622448268164780322.jar C:\Users\User\AppData\Local\Temp\surefire15389853507731351113 2024-02-18T12-49-09_864-jvmRun1 surefire5059559530229908421tmp surefire_010291337481830352192tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\User\OneDrive\Desktop\java-revised-final\ApiFetcher\target\test-classes;C:\Users\User\OneDrive\Desktop\java-revised-final\ApiFetcher\target\classes;C:\Users\User\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.7.0\junit-jupiter-api-5.7.0.jar;C:\Users\User\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\User\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\User\.m2\repository\org\junit\platform\junit-platform-commons\1.7.0\junit-platform-commons-1.7.0.jar;C:\Users\User\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.7.0\junit-jupiter-engine-5.7.0.jar;C:\Users\User\.m2\repository\org\junit\platform\junit-platform-engine\1.7.0\junit-platform-engine-1.7.0.jar;C:\Users\User\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.13.1\jackson-core-2.13.1.jar;C:\Users\User\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.13.1\jackson-annotations-2.13.1.jar;C:\Users\User\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.13.1\jackson-databind-2.13.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\User\AppData\Local\Temp\surefire1623448153472174073\surefirebooter5996987820503810257.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\User\AppData\Local\Temp\surefire15389853507731351113\surefirebooter15622448268164780322.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.9+9"/>
@@ -57,11 +57,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="fetchAllCountryNamesTest" classname="CountryServiceTest" time="2.071"/>
-  <testcase name="getCountriesByCurrencyTest" classname="CountryServiceTest" time="0.735"/>
-  <testcase name="getCountriesByLanguageTest" classname="CountryServiceTest" time="0.79"/>
-  <testcase name="getAllCountriesTest" classname="CountryServiceTest" time="1.138"/>
-  <testcase name="fetchAllLanguagesTest" classname="CountryServiceTest" time="1.201"/>
-  <testcase name="fetchAllCurrencyNamesTest" classname="CountryServiceTest" time="1.179"/>
-  <testcase name="getCountriesByNameTest" classname="CountryServiceTest" time="0.382"/>
+  <testcase name="fetchAllCountryNamesTest" classname="CountryServiceTest" time="1.965"/>
+  <testcase name="getCountriesByCurrencyTest" classname="CountryServiceTest" time="0.773"/>
+  <testcase name="getCountriesByLanguageTest" classname="CountryServiceTest" time="0.809"/>
+  <testcase name="getAllCountriesTest" classname="CountryServiceTest" time="1.129"/>
+  <testcase name="fetchAllLanguagesTest" classname="CountryServiceTest" time="1.176"/>
+  <testcase name="fetchAllCurrencyNamesTest" classname="CountryServiceTest" time="1.195"/>
+  <testcase name="getCountriesByNameTest" classname="CountryServiceTest" time="0.386"/>
 </testsuite>

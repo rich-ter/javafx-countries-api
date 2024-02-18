@@ -3,7 +3,7 @@ module com.richter.CountriesAppJFX {
 	requires java.net.http;
 	requires com.fasterxml.jackson.databind;
 	requires javafx.base;
-	requires javafx.graphics;
+	requires transitive javafx.graphics;
 	requires com.fasterxml.jackson.annotation;
 	requires org.controlsfx.controls;
     requires common;
