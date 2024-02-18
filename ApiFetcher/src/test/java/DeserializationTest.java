@@ -11,7 +11,6 @@ class DeserializationTest {
 
     @Test
     void testCountryDeserialization() throws Exception {
-        // Example JSON that mimics the API response
         String json = """
                 {
                     "name": {"common": "Greece", "official": "Hellenic Republic"},

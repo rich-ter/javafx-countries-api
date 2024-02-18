@@ -22,14 +22,20 @@ public class CountryService {
     // το οποίο είναι: 
     //https://restcountries.com/v3.1/name/country_name?fields=name,currencies,capital,population,continents
     //θα είχε σημαντικη διαφορα 
-    // sto runtime και performance της εφαρμογης; θα ήθελα να το συζητησω στην θεωριτική εξέταση
+    // sto runtime και performance της εφαρμογης; θα ήθελα να το συζητησω στην θεωρητική εξέταση
     private final String BASE_URL = "https://restcountries.com/v3.1";
 
+    // Αρχικοποιεί την country service με έναν HTTP client και το jackson object mapper 
+    // το ένα για την σύνδεση με το api και το αλλο για την αποσειριοποιηση 
+    // θα το χρησιμοποιήσουμε στο app.java για την ανάκτηση δεδομένων 
     public CountryService() {
         this.client = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
     }
 
+    // Στέλνει ενα http request με παραμετρο ένα url 
+    // και μετα κανει deserialize τα δεδομένα που παιρνει απο αυτο το url
+    // και τα βαζει στην κλαση Country pojo 
     private Country[] sendRequest(String url) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -39,19 +45,21 @@ public class CountryService {
         return mapper.readValue(response.body(), Country[].class);
     }
     
+    // καλεί το url με το endpoint all για όλες τις χώρες 
+    // καλεί την sendRequest για να περάσει τα δεδομένα στην pojo.
     public Country[] getAllCountries() throws IOException, InterruptedException {
         return sendRequest(BASE_URL + "/all");
     }
 
+    // το ίδιο για το όνομα
     public List<Country> getCountriesByName(String name, boolean exactMatch) throws IOException, InterruptedException {
         String url = BASE_URL + "/name/" + name + (exactMatch ? "?fullText=true" : "");
         Country[] countries = sendRequest(url);
-
         List<Country> countryList = Arrays.asList(countries);
-
         return countryList;
     }
 
+    // το ίδιο για τη γλωσσα
     public List<Country> getCountriesByLanguage(String language, boolean exactMatch) throws IOException, InterruptedException {
         String url = BASE_URL + "/lang/" + language + (exactMatch ? "?fullText=true" : "");
         Country[] countries = sendRequest(url);
@@ -61,6 +69,7 @@ public class CountryService {
         return countryList;
     }
 
+	// το ίδιο για το νόμισμα
     public Country[] getCountriesByCurrency(String currency, boolean exactMatch) throws IOException, InterruptedException {
         String url = BASE_URL + "/currency/" + currency.toLowerCase();
         return sendRequest(url);

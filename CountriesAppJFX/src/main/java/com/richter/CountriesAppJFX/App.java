@@ -25,10 +25,13 @@ import javafx.scene.control.Alert;
 
 public class App extends Application {
 
-    private TableView<Country> tableView = new TableView<>();// Table view για τα data μας
-    private ComboBox<String> searchHistoryComboBox; // Προηγούμενες αναζητήσεις
+	// Table view για τα data μας
+    private TableView<Country> tableView = new TableView<>();
+    // Προηγούμενες αναζητήσεις
+    private ComboBox<String> searchHistoryComboBox; 
     private Button searchButton = new Button("Search");
     private Button fetchAllButton; 
+    // τα 3 παρακάτω ειναι components απο το javafxcontrols module
     private CountrySearchableComboBox countrySearchableComboBox;
     private LanguageSearchableComboBox languageSearchableComboBox;
     private CurrencySearchableComboBox currencySearchableComboBox;
@@ -59,9 +62,10 @@ public class App extends Application {
             }
         });
         
+        //δηλώνουμε την μέθοδο performsearch στο κουμπί searchButton το οποίο είναι το searchInputBox
         searchButton.setOnAction(event -> performSearch());
 
-        // εκκαθάριση επιλογών
+        // εκκαθάριση επιλογών, αν θέλαμε θα μπορούσαμε να βάλουμε και το ιστορικό εδώ. 
         Button resetButton = new Button("Reset");
         resetButton.setOnAction(event -> {
             tableView.getItems().clear();
@@ -77,10 +81,12 @@ public class App extends Application {
         
         setupTableView();
 
+        // initiation για το κουμπι το οποιό καθορίζει την μέθοδο της αναζήτησης. 
         HBox searchInputBox = new HBox( searchButton);
         searchInputBox.setAlignment(Pos.CENTER);
         searchInputBox.setSpacing(10);
 
+        // Παρουσίαση του header μας και τον επιλογών 
         HBox searchBox = new HBox(searchHistoryComboBox, fetchAllButton, countrySearchBox,languageSearchBox,currencySearchBox, searchInputBox, resetButton);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(10);
@@ -89,7 +95,9 @@ public class App extends Application {
         vbox.setSpacing(20);
         vbox.setPadding(new Insets(20, 0, 20, 0));
 
+        // μέγεθος οθόνης
         Scene scene = new Scene(vbox, 1200, 900);
+        // κώδικας CSS
         scene.getStylesheets().add(getClass().getResource("/styling.css").toExternalForm());
 
         primaryStage.setScene(scene);
@@ -100,6 +108,8 @@ public class App extends Application {
 
     }
  
+    // μέθοδος για την αναζήτη απο το history box 
+    // καλείτε αυτόματα χωρίς το κουμπί search 
     private void executeSearchFromHistory(String historyEntry) {
         if (historyEntry.startsWith("By Country Name:")) {
             String searchTerm = historyEntry.replace("By Country Name:", "").trim();
@@ -115,7 +125,7 @@ public class App extends Application {
         }
     }
     
-    // κοιτάει αν είναι άδεια τα πεδία 
+    // κοιτάει αν είναι άδεια τα πεδία και αν δεν είναι να βγάλει error στον χρήστη 
     private void performSearch() {
         // Check which search criteria is selected and call the corresponding method
         if (!countrySearchableComboBox.getSelectionModel().isEmpty()) {
@@ -142,7 +152,7 @@ public class App extends Application {
         }
     }
 
-
+    // το ίδιο με παραπάνω αλλα για το κάθε component
     private void performCountrySearch() {
         if (!languageSearchableComboBox.getSelectionModel().isEmpty() || !currencySearchableComboBox.getSelectionModel().isEmpty()) {
             showAlert("Please clear your previous search before searching by country name.");
@@ -154,7 +164,8 @@ public class App extends Application {
             }
         }
     }
-
+    
+    // το ίδιο με παραπάνω αλλα για το κάθε component
     private void performLanguageSearch() {
         if (!countrySearchableComboBox.getSelectionModel().isEmpty() || !currencySearchableComboBox.getSelectionModel().isEmpty()) {
             showAlert("Please clear your previous search before searching by language.");
@@ -166,7 +177,8 @@ public class App extends Application {
             }
         }
     }
-
+    
+    // το ίδιο με παραπάνω αλλα για το κάθε component
     private void performCurrencySearch() {
         if (!countrySearchableComboBox.getSelectionModel().isEmpty() || !languageSearchableComboBox.getSelectionModel().isEmpty()) {
             showAlert("Please clear your previous search before searching by currency.");
@@ -189,21 +201,26 @@ public class App extends Application {
         alert.showAndWait();
     }
 
+    // κοιτάει αν ένα search term είναι άδειο 
     private boolean isValidSearchTerm(String searchTerm) {
         return searchTerm != null && !searchTerm.trim().isEmpty();
     }
 
+    // παρουσίαση των δεδομένων
     private void setupTableView() {
 
+    	// παρακάτω είναι όλοι οι πίνακες που υπάρχουν στο UI
+    	
+    	
     	TableColumn<Country, String> commonNameCol = new TableColumn<>("Common Name");
         commonNameCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getName().getCommon()));
-        commonNameCol.setPrefWidth(200); // Set preferred width
+        commonNameCol.setPrefWidth(200); 
 
         TableColumn<Country, String> officialNameCol = new TableColumn<>("Official Name");
         officialNameCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getName().getOfficial()));
-        officialNameCol.setPrefWidth(200); // Set preferred width
+        officialNameCol.setPrefWidth(200); 
 
         TableColumn<Country, String> capitalCol = new TableColumn<>("Capital");
         capitalCol.setCellValueFactory(cellData ->
@@ -245,6 +262,7 @@ public class App extends Application {
         tableView.setPrefHeight(900); 
     }
 
+    // γυρνάει τις χώρες ανα γλώσσα, μέσω της μεθόδου στο CountryService
     private void fetchCountriesByLanguage(String language, boolean exactMatch) {
         new Thread(() -> {
             try {
@@ -271,6 +289,7 @@ public class App extends Application {
         }).start();
     }
 
+    // γυρνάει τις χώρες ανα νόμισμα, μέσω της μεθόδου στο CountryService
     private void fetchCountriesByCurrency(String currency, boolean exactMatch) {
         new Thread(() -> {
             try {
@@ -278,7 +297,7 @@ public class App extends Application {
                 if (finalCurrency.isEmpty()) {
                     return;
                 }
-
+                // σε περίπτωση κενού, πρόσθεσε το %20.
                 String adjustedCurrency = finalCurrency.replace(" ", "%20");
                 CountryService service = new CountryService();
                 Country[] countries = service.getCountriesByCurrency(adjustedCurrency, exactMatch);
@@ -294,7 +313,7 @@ public class App extends Application {
         }).start();
     }
 
-
+    // γυρνάει όλες τις χώρες
     private void fetchAllCountries() {
         new Thread(() -> {
             try {
@@ -315,6 +334,7 @@ public class App extends Application {
         }).start();
     }
 
+    // γυρνάει μία χώρα με βάση το όνομα της, μέσω της μεθόδου στο CountryService
     private void fetchCountryData(String countryName, boolean exactMatch) {
         new Thread(() -> {
             try {
@@ -324,6 +344,7 @@ public class App extends Application {
                     return;
                 }
 
+                // ξανά το πρόβλημα με το κενό καθώς το api endpoint δεν δουλευέι αλλιώς.
                 String adjustedCountryName = finalCountryName.replace(" ", "%20");
 
                 CountryService service = new CountryService();
@@ -341,6 +362,7 @@ public class App extends Application {
         }).start();
     }
 
+    // η μέθοδος που κρατάει το ιστορικό για τις αναζητήσεις του χρήστη 
     private void updateSearchHistory(String criteria, String term) {
         String searchEntry = (term == null || term.isEmpty()) ? criteria : criteria + ": " + term;
         if (!searchHistoryComboBox.getItems().contains(searchEntry)) {

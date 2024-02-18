@@ -3,16 +3,18 @@ package ApiFetcher;
 import java.util.List;
 import java.util.Set;
 
+
+// Η ΚΛΑΣΗ ΠΑΡΑΚΑΤΩ ΕΧΕΙ ΥΛΟΠΟΙΗΘΕΙ ΓΙΑ ΔΙΚΗ ΜΑΣ ΔΙΕΥΚΟΛΥΝΣΗ ΚΑΙ ΔΕΝ ΑΠΟΤΕΛΕΙ 
+// ΜΕΡΟΣ ΤΗΣ ΕΡΓΑΣΙΑΣ. ΤΗΝ ΕΧΟΥΜΕ ΑΦΗΣΕΙ ΓΙΑ ΕΝΔΕΙΚΤΙΚΟΥΣ ΛΟΓΟΥΣ.
 public class TestApi {
     public static void main(String[] args) {
-//        testGetCountryByName(); // Existing call to test fetching a single country
-        testGetAllCountries(); // Call to test fetching all countries
-//        testFetchAllCountryNames(); // New call to test fetching all country names
-//        testFetchAllLanguages(); // New call to test fetching all languages
-//        testFetchAllCurrencyNames(); // New call to test fetching all currency names
+//        testGetCountryByName(); 
+        testGetAllCountries(); 
+//        testFetchAllCountryNames(); 
+//        testFetchAllLanguages();
+//        testFetchAllCurrencyNames(); 
     }
     
-    // Existing method to test fetching a country by name
 //    public static void testGetCountryByName() {
 //        try {
 //            CountryService service = new CountryService();
@@ -23,22 +25,20 @@ public class TestApi {
 //        }
 //    }
 
-    // Existing method to test fetching all countries
     public static void testGetAllCountries() {
         try {
             CountryService service = new CountryService();
             Country[] allCountries = service.getAllCountries();
             System.out.println("Fetched countries:");
             for (Country country : allCountries) {
-                System.out.println(country); // This assumes Country.toString() is overridden to print meaningful info
+                System.out.println(country); 
             }
-            // After printing all countries, print the total count
             System.out.println("Total number of countries fetched: " + allCountries.length);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    // New method to test fetching all country names
+
     public static void testFetchAllCountryNames() {
         try {
             CountryService service = new CountryService();
@@ -49,7 +49,7 @@ public class TestApi {
         }
     }
 
-    // New method to test fetching all languages
+
     public static void testFetchAllLanguages() {
         try {
             CountryService service = new CountryService();
@@ -60,7 +60,7 @@ public class TestApi {
         }
     }
 
-    // New method to test fetching all currency names
+
     public static void testFetchAllCurrencyNames() {
         try {
             CountryService service = new CountryService();
